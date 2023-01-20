@@ -1,11 +1,11 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import med.voll.api.endereco.DadosEndereco;
+import med.voll.api.domain.endereco.DadosEndereco;
 
 /*A classe do tipo record é bem mais simples que a classe normal, atributos e metodos
 são todos feitos por debaixo dos panos*/
@@ -16,20 +16,21 @@ public record DadosCadastroMedico(
         @NotBlank
         String nome,
 
-        @NotBlank
+        @NotBlank(message = "{email.obrigatorio}")
         @Email
         String email,
 
-        @NotBlank
+        @NotBlank(message = "{telefone.obrigatorio}")
         String telephone,
 
-        @Pattern(regexp = "\\d{4,6}")
+        @NotBlank(message = "{crm.obrigatorio}")
+        @Pattern(regexp = "\\d{4,6}", message ="{crm.invalido}")
         String crm,
 
-        @NotNull //Não é notblank pois o not blank é só para strings
+        @NotNull(message = "{especialidade.obrigatoria}")
         Especialidade especialidade,
 
-        @NotNull
+        @NotNull(message = "{endereco.obrigatorio}")
         @Valid
         DadosEndereco endereco ) {
 }
